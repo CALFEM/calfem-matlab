@@ -1,0 +1,46 @@
+CALFEM - HISTORY
+
+------------------------------------------------------------------------
+
+CHANGES IN 3.2
+960926: Solve.m withdrawn from calfem, use is made of solveq.m everywhere.
+990301: Colours changed to fit matlab 5 (eldisp2, eldisp3, eldraw2,
+        eldraw3, eliso2,  pltstyle, eldisp3  elflux2, elprinc2)
+990301: Principal moments removed from the output list in plantrs.
+990301: The function eldia2 for drawing section forces is added.
+
+BUGFIXES IN 3.2
+970109: Solve-command changed to solveq in example files exs1-exs7.
+970110: a=solveq(K,f,bc) changed to [a,Q]=solveq(K,f,bc) in exn2.m
+970407  g' changed to g in gfunc.m to work in Matlab 5
+970414  Helptext corrected in flw2ts.m
+970415  Functest.m changed, gives same result for Matlab 5.0 as for 4.2
+970415  Changed from clg to clf in example scripts.
+980211  Bug in step2.m fixed. [ tf(1) => tf(:,1) ]
+
+------------------------------------------------------------------------
+
+990301 CALFEM version 3.3 released
+
+CHANGES IN 3.3
+
+BUGFIXES IN 3.3
+040224  Bug fixes in soli8s, plani4s and plani8s (rowex==11 => rowex==1)
+
+------------------------------------------------------------------------
+
+041007 CALFEM version 3.4 released
+       
+       Changes:
+       The syntax of eldia2 has been changed.
+       The function scalfact2 for calculation of scale factor for
+       drawing computational results has been added.
+       The function pltscalb2 for for drawing a scale bar in connection
+       to graphical presentation of results has been added.
+       Example files have been modified.
+       Break statement in graphical functions has been removed to make 
+       CALFEM work in Matlab 7 
+       
+       Bugfixes:
+       Matrix B in plantce, plantcs has been corrected.
+       Input variable frequency changed to angular frequency in sweep. 

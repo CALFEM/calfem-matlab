@@ -1,0 +1,143 @@
+% example exs6 
+%----------------------------------------------------------------
+% PURPOSE 
+%    Analysis of Lehrter station
+%----------------------------------------------------------------
+
+% REFERENCES
+%     Ola Dahlblom 2004-12-13
+%----------------------------------------------------------------
+ echo on
+
+%----- Topology -------------------------------------------------
+
+ Edof=[1  1  2  3  4  5  6;
+       2  4  5  6  7  8  9;
+       3  7  8  9 10 11 12;
+       4 10 11 12 13 14 15;
+       5 13 14 15 16 17 18;
+       6 16 17 18 19 20 21;
+       7 19 20 21 22 23 24;
+       8 22 23 24 25 26 27;
+       9 25 26 27 28 29 30;
+       10 28 29 30 31 32 33];      
+
+%----- Stiffness matrix K and load vector f ---------------------
+
+ K=zeros(33);	f=zeros(33,1);
+
+%----- Element stiffness and element load matrices  -------------
+
+ E=200e9;
+ A1=2e-3;     
+ I1=1.6e-5;	  
+
+
+ ep1=[E A1 I1];	 
+ ex=[20 22;
+     22 26;
+     26 32;
+     32 38;
+     38 46;
+     46 52;
+     52 62;
+     62 75;
+     75 92;
+     92 110]
+ 
+ ey=[13 22;
+     22 30;
+     30 37;
+     37 41;
+     41 45;
+     45 47;
+     47 50;
+     50 53;
+     53 57;
+     57 59];	   
+
+ for i=1:10
+     fi=atan(ey(i,2)-ey(i,1))/(ex(i,2)-ex(i,1));
+     L=sqrt((ey(i,2)-ey(i,1))*(ey(i,2)-ey(i,1))+(ex(i,2)-ex(i,1))*(ex(i,2)-ex(i,1)));
+     eq(i,1)=-g*sin(fi);
+     eq(i,2)=-g*cos(fi);
+ end
+ 
+ Ke1=beam2e(ex1,ey1,ep1);
+ Ke2=beam2e(ex2,ey2,ep1);
+ [Ke3,fe3]=beam2e(ex3,ey3,ep3,eq3);
+
+%----- Assemble Ke into K ---------------------------------------
+
+ K=assem(Edof(1,:),K,Ke1);
+ K=assem(Edof(2,:),K,Ke2);
+ [K,f]=assem(Edof(3,:),K,Ke3,f,fe3);
+
+%----- Solve the system of equations and compute reactions ------
+
+ bc=[1 0; 2 0; 3 0; 10 0; 11 0];	
+ [a,r]=solveq(K,f,bc)
+
+%----- Section forces -------------------------------------------
+
+ Ed=extract(Edof,a);
+
+ es1=beam2s(ex1,ey1,ep1,Ed(1,:),eq1,21) 
+ es2=beam2s(ex2,ey2,ep1,Ed(2,:),eq2,21) 
+ es3=beam2s(ex3,ey3,ep3,Ed(3,:),eq3,21) 
+
+ %----- Draw deformed frame ---------------------------------------
+ 
+ figure(1)
+ plotpar=[2 1 0];
+ eldraw2(ex1,ey1,plotpar);
+ eldraw2(ex2,ey2,plotpar);
+ eldraw2(ex3,ey3,plotpar);
+ sfac=scalfact2(ex3,ey3,Ed(3,:),0.1);
+ plotpar=[1 2 1];
+ eldisp2(ex1,ey1,Ed(1,:),plotpar,sfac);
+ eldisp2(ex2,ey2,Ed(2,:),plotpar,sfac);
+ eldisp2(ex3,ey3,Ed(3,:),plotpar,sfac);
+ axis([-1.5 7.5 -0.5 5.5]); 
+ pltscalb2(sfac,[1e-2 0.5 0]);
+ axis([-1.5 7.5 -0.5 5.5]);
+ title('displacements')
+ 
+%----- Draw normal force diagram --------------------------------
+ 
+ figure(2)
+ plotpar=[2 1];
+ sfac=scalfact2(ex1,ey1,es1(:,1),0.2);
+ eldia2(ex1,ey1,es1(:,1),plotpar,sfac);
+ eldia2(ex2,ey2,es2(:,1),plotpar,sfac);
+ eldia2(ex3,ey3,es3(:,1),plotpar,sfac);
+ axis([-1.5 7.5 -0.5 5.5]);
+ pltscalb2(sfac,[3e4 1.5 0]);
+ title('normal force')
+
+%----- Draw shear force diagram ---------------------------------
+ 
+ figure(3)
+ plotpar=[2 1];
+ sfac=scalfact2(ex3,ey3,es3(:,2),0.2);
+ eldia2(ex1,ey1,es1(:,2),plotpar,sfac);
+ eldia2(ex2,ey2,es2(:,2),plotpar,sfac);
+ eldia2(ex3,ey3,es3(:,2),plotpar,sfac);
+ axis([-1.5 7.5 -0.5 5.5]);
+ pltscalb2(sfac,[3e4 0.5 0]);
+ title('shear force') 
+
+%----- Draw moment diagram --------------------------------------
+ 
+ figure(4)
+ plotpar=[2 1];
+ sfac=scalfact2(ex3,ey3,es3(:,3),0.2);
+ eldia2(ex1,ey1,es1(:,3),plotpar,sfac);
+ eldia2(ex2,ey2,es2(:,3),plotpar,sfac);
+ eldia2(ex3,ey3,es3(:,3),plotpar,sfac);
+ axis([-1.5 7.5 -0.5 5.5]);
+ pltscalb2(sfac,[3e4 0.5 0]);
+ title('moment') 
+
+%------------------------ end -----------------------------------
+ echo off
