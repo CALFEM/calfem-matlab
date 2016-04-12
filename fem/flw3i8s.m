@@ -98,7 +98,7 @@ ir=ep(1);  ngp=ir*ir*ir;
   dNr=dNr/8.;
 
 
-  eci=N*[ex;ey;ex]';  [red,ced]=size(ed);
+  eci=N*[ex;ey;ez]';  [red,ced]=size(ed);
   JT=dNr*[ex;ey;ez]';
 
   for i=1:ngp
