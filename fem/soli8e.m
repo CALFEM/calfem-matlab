@@ -24,8 +24,8 @@
 
 % LAST MODIFIED: M Ristinmaa   1995-10-25
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   ir=ep(1);  ngp=ir*ir*ir;
   if nargin==5   eq=zeros(3,1);  end 

@@ -9,7 +9,7 @@ function [Ke,fe]=platre(ex,ey,ep,D,eq)
 % INPUT:  ex = [x1 x2 x3 x4]      element coordinates
 %         ey = [y1 y2 y3 y4]
 %
-%         ep=[t]                  thicknes
+%         ep=[t]                  thickness
 %
 %         D                       constitutive matrix for
 %                                 plane stress         
@@ -20,12 +20,12 @@ function [Ke,fe]=platre(ex,ey,ep,D,eq)
 %          fe : equivalent nodal forces (12 x 1)
 %-------------------------------------------------------------
 
-% LAST MODIFIED: K Persson   1995-08-23
+% LAST MODIFIED: K Persson   2009-11-30
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
-Lx=ex(3)-ex(1); Ly=ey(3)-ey(1); t=ep(1,1);
+Lx=abs(ex(3)-ex(1)); Ly=abs(ey(3)-ey(1)); t=ep(1,1);
 %
 D=t^3/12*D;
 %
@@ -73,12 +73,47 @@ Keq(12,12)=[C14];
 Keq=Keq'+Keq-diag(diag(Keq));
 %
 if nargin==5
-R1=eq*Lx*Ly/4;
-R2=eq*Lx*Ly^2/24;
-R3=eq*Ly*Lx^2/24;
+Lt=eq*Lx*Ly;
+R1=Lt/4;
+R2=Lt*Ly/24;
+R3=Lt*Lx/24;
 %
 feq(:,1)=[R1 R2 -R3 R1 R2 R3 R1 -R2 R3 R1 -R2 -R3]';
 fe=feq;
 end
 Ke=Keq;  
+
+if ((ex(3)-ex(1))<0) & (ey(3)-ey(1)>0)
+ a=Ke(1:3,1:3);
+ b=Ke(1:3,4:12);
+ Ke(1:3,:)=[];
+ Ke(:,1:3)=[];
+ Ke(1:9,10:12)=b';
+ Ke(10:12,1:9)=b;
+ Ke(10:12,10:12)=a; 
+ fe(:,1)=[ R1 R2 R3 R1 -R2 R3 R1 -R2 -R3 R1 R2 -R3]';
+end    
+
+if ((ex(3)-ex(1))<0) & (ey(3)-ey(1)<0)
+ a=Ke(1:6,1:6);
+ b=Ke(1:6,7:12);
+ Ke(1:6,:)=[];
+ Ke(:,1:6)=[];
+ Ke(1:6,7:12)=b';
+ Ke(7:12,1:6)=b;
+ Ke(7:12,7:12)=a; 
+ fe(:,1)=[R1 -R2 R3 R1 -R2 -R3 R1 R2 -R3 R1 R2 R3]';
+end    
+
+if ((ex(3)-ex(1))>0) & (ey(3)-ey(1)<0)
+ a=Ke(1:9,1:9);
+ b=Ke(1:9,10:12);
+ Ke(1:9,:)=[];
+ Ke(:,1:9)=[];
+ Ke(1:3,4:12)=b';
+ Ke(4:12,1:3)=b;
+ Ke(4:12,4:12)=a; 
+ fe(:,1)=[ R1 -R2 -R3 R1 R2 -R3 R1 R2 R3 R1 -R2 R3 ]';
+end    
+
 %--------------------------end--------------------------------

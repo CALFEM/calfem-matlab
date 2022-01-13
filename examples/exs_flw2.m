@@ -1,4 +1,4 @@
-% example exs8
+% example exs_flw2
 %----------------------------------------------------------------
 % PURPOSE 
 %    Analysis of two dimensional diffusion
@@ -56,7 +56,7 @@ bc=[1 0;2 0;3 0;4 0;7 0;10 0;13 0.5e-3;14 1e-3;15 1e-3];
 
 % ----- Compute element flux vector -----
 
-Ed=extract(Edof,a);
+Ed=extract_ed(Edof,a);
 for i=1:8
   Es(i,:)=flw2qs(Ex(i,:),Ey(i,:),ep,D,Ed(i,:))
 end

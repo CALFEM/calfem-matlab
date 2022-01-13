@@ -1,4 +1,4 @@
-% example exd1
+% example exd_beam2_m
 %----------------------------------------------------------------
 % PURPOSE 
 %    Set up the fe-model and perform eigenvalue analysis
@@ -6,8 +6,9 @@
 %----------------------------------------------------------------
 
 % REFERENCES
-%     G"oran Sandberg 1994-03-08 
+%     Göran Sandberg 1994-03-08 
 %     Karl-Gunnar Olsson 1995-09-29
+%     Ola Dahlblom 2022-01-13
 %----------------------------------------------------------------
  echo on
 
@@ -31,11 +32,11 @@ Dof=[1  2  3; 4  5  6; 7  8  9; 10 11 12; 13 14 15];
 K=zeros(15);     M=zeros(15);
 [Ex,Ey]=coordxtr(Edof,Coord,Dof,2);
 for i=1:2
-  [k,m,c]=beam2d(Ex(i,:),Ey(i,:),epv);
+  [k,m,c]=beam2de(Ex(i,:),Ey(i,:),epv);
   K=assem(Edof(i,:),K,k);  M=assem(Edof(i,:),M,m);  
 end
 for i=3:4
-  [k,m,c]=beam2d(Ex(i,:),Ey(i,:),eph);
+  [k,m,c]=beam2de(Ex(i,:),Ey(i,:),eph);
   K=assem(Edof(i,:),K,k);  M=assem(Edof(i,:),M,m);  
 end
  
@@ -57,7 +58,7 @@ Freq=sqrt(La)/(2*pi);
 
 figure(1),    clf,     grid,     title('The first eigenmode'), 
 eldraw2(Ex,Ey,[2 3 1]); 
-Edb=extract(Edof,Egv(:,1));      eldisp2(Ex,Ey,Edb,[1 2 2]);
+Edb=extract_ed(Edof,Egv(:,1));      eldisp2(Ex,Ey,Edb,[1 2 2]);
 FreqText=num2str(Freq(1));       text(.5,1.75,FreqText);
 
 % ----- plot eight eigenmodes ------------------------------------
@@ -66,14 +67,14 @@ figure(2), clf, axis('equal'), hold on, axis off
 sfac=0.5;
 title('The first eight eigenmodes (Hz)' )
 for i=1:4;
-  Edb=extract(Edof,Egv(:,i));
+  Edb=extract_ed(Edof,Egv(:,i));
   Ext=Ex+(i-1)*3;                eldraw2(Ext,Ey,[2 3 1]); 
   eldisp2(Ext,Ey,Edb,[1 2 2],sfac);
   FreqText=num2str(Freq(i));     text(3*(i-1)+.5,1.5,FreqText);
 end;
 Eyt=Ey-4; 
 for i=5:8;
-  Edb=extract(Edof,Egv(:,i));
+  Edb=extract_ed(Edof,Egv(:,i));
   Ext=Ex+(i-5)*3;                eldraw2(Ext,Eyt,[2 3 1]); 
   eldisp2(Ext,Eyt,Edb,[1 2 2],sfac);
   FreqText=num2str(Freq(i));     text(3*(i-5)+.5,-2.5,FreqText);

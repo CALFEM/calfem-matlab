@@ -17,8 +17,8 @@
 
 % LAST MODIFIED: M Ristinmaa 1993-10-06
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   [nd,nd]=size(A);
   fdof=[1:nd]';

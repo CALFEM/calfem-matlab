@@ -22,8 +22,8 @@
 
 % LAST MODIFIED: O Dahlblom 2004-10-07   
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   [nd,nd]=size(K);
   fdof=[1:nd]';

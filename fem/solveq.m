@@ -18,8 +18,8 @@
 
 % LAST MODIFIED: M Ristinmaa   1993-10-06
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   if nargin==2 ; 
      d=K\f ; 

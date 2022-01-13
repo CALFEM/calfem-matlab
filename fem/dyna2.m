@@ -20,8 +20,8 @@ function [Y]=dyna2(w2,xi,f,g,dt)
 
 % LAST MODIFIED: H Carlsson  1993-09-23
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 [neq nc]=size(w2);
 [np nr]=size(g)

@@ -1,6 +1,7 @@
  function [es,edi,eci]=beam2s(ex,ey,ep,ed,eq,n)
 % es=beam2s(ex,ey,ep,ed)
 % es=beam2s(ex,ey,ep,ed,eq)
+% [es,edi]=beam2s(ex,ey,ep,ed,eq,n)
 % [es,edi,eci]=beam2s(ex,ey,ep,ed,eq,n)
 %---------------------------------------------------------------------
 %    PURPOSE
@@ -16,7 +17,7 @@
 %
 %            ed = [u1 ... u6] element displacements
 %
-%            eq = [qx qy]     distributed loads, local directions 
+%            eq = [qX qY]     distributed loads, local directions 
 %
 %            n : number of evaluation points ( default=2 )
 %          
@@ -25,64 +26,83 @@
 %                   .........]  
 %           
 %            edi = [ u1 v1 ;    element displacements, local directions,
-%                    u2 v2 ;    in n points along the beam, dim(es)= n x 2
+%                    u2 v2 ;    in n points along the beam, dim(edi)= n x 2
 %                   .......]    
 %
-%            eci = [ x1  ;      local x-coordinates of the evaluation 
-%                    x2 ;       points, (x1=0 and xn=L)
-%                    ...]
+%            eci = [x1;         evaluation points on the local x-axis 
+%                   x2;      
+%                   .......] 
 %-------------------------------------------------------------------------
  
-% LAST MODIFIED: K Persson    1995-08-23
+% LAST MODIFIED: O Dahlblom    2021-09-01
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
-  EA=ep(1)*ep(2); EI=ep(1)*ep(3);
-  b=[ ex(2)-ex(1); ey(2)-ey(1) ];
-  L=sqrt(b'*b);
-
+  E=ep(1);  A=ep(2);  I=ep(3); 
+  DEA=E*A; DEI=E*I;
+  
   if length(ed(:,1)) > 1 
      disp('Only one row is allowed in the ed matrix !!!')
      return
    end
   
-  qx=0; qy=0;  if nargin>4;  qx=eq(1); qy=eq(2); end 
+  qX=0; qY=0;  if nargin>4;  qX=eq(1); qY=eq(2); end 
     
   ne=2;        if nargin>5;  ne=n; end;
      
-  C=[0   0   0    1   0   0;
-     0   0   0    0   0   1;
-     0   0   0    0   1   0;
-     L   0   0    1   0   0;
-     0   L^3  L^2 0   L   1;
-     0 3*L^2 2*L  0   1   0];
-
-  n=b/L;
-
-  G=[n(1) n(2)  0    0    0   0;
-    -n(2) n(1)  0    0    0   0;
+  dx=ex(2)-ex(1);
+  dy=ey(2)-ey(1);
+  L=sqrt(dx*dx+dy*dy);
+   
+  nxX=dx/L;
+  nyX=dy/L;
+  nxY=-dy/L;
+  nyY=dx/L;
+  G=[nxX  nyX   0    0    0   0;
+     nxY  nyY   0    0    0   0;
       0    0    1    0    0   0;
-      0    0    0   n(1) n(2) 0;
-      0    0    0  -n(2) n(1) 0;
+      0    0    0   nxX  nyX  0;
+      0    0    0   nxY  nyY  0;
       0    0    0    0    0   1];
  
-  M=inv(C)*(G*ed'-[0 0 0 -qx*L^2/(2*EA) qy*L^4/(24*EI) qy*L^3/(6*EI)]' );
+  edl=G*ed';
   
-  A=[M(1) M(4)]';  B=[M(2) M(3) M(5) M(6)]';
+  a1=[edl(1); edl(4)];
+  C1=[ 1   0;
+      -1/L 1/L];
+  C1a=C1*a1;
   
-  x=[0:L/(ne-1):L]';   zero=zeros(size(x));    one=ones(size(x));
+  a2=[edl(2); edl(3); edl(5); edl(6)];
+  C2=[1       0    0       0;
+      0       1    0       0;
+     -3/(L^2) -2/L 3/(L^2) -1/L;
+     2/(L^3) 1/(L^2) -2/(L^3) 1/(L^2)];
+  C2a=C2*a2;
+     
+  X=[0:L/(ne-1):L]';   zero=zeros(size(X));    one=ones(size(X));
   
-  u=[x one]*A-(x.^2)*qx/(2*EA);
-  du=[one zero]*A-x*qx/EA;
-  v=[x.^3 x.^2 x one]*B+(x.^4)*qy/(24*EI); 
-% dv=[3*x.^2 2*x one zero]*B+(x.^3)*qy/(6*EI);
-  d2v=[6*x 2*one zero zero]*B+(x.^2)*qy/(2*EI);
-  d3v=[6*one zero zero zero]*B+x*qy/EI;
+  u=[one X]*C1a;
+  du=[zero one]*C1a;
+  if DEA~=0; 
+    u=u-(X.^2-L*X)*qX/(2*DEA);
+    du=du-(2*X-L)*qX/(2*DEA);
+  end; 
   
-  N=EA*du; M=EI*d2v; V=-EI*d3v; 
+  v=[one X X.^2 X.^3]*C2a;
+% dv=[zero one 2*X 3*X.^2]*C2a;
+  d2v=[zero zero 2*one 6*X]*C2a;
+  d3v=[zero zero zero 6*one]*C2a;
+  if DEI~=0;
+    v=v+(X.^4-2*L*X.^3+L^2*X.^2)*qY/(24*DEI);
+%   dv=dv+(2*X.^3-3*L*X.^2+L^2*X)*qY/(12*DEI);
+    d2v=d2v+(6*X.^2-6*L*X+L^2)*qY/(12*DEI);
+    d3v=d3v+(2*X-L)*qY/(2*DEI);
+  end;
+   
+  N=DEA*du; M=DEI*d2v; V=-DEI*d3v; 
   es=[N V M];
   edi=[u v];
-  eci=x;
+  eci=X;
 %--------------------------end--------------------------------
  

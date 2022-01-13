@@ -23,10 +23,10 @@
 %         fe : equivalent nodal forces (8 x 1)
 %-------------------------------------------------------------
 
-% LAST MODIFIED: A Olsson    2002-12-16
+% LAST MODIFIED: K Persson    2016-11-23
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 
 ptype=ep(1) ; t=ep(2); E=ep(3); v=ep(4);
@@ -35,7 +35,7 @@ bx=0 ; by=0 ;
 if nargin==4; bx=eq(1) ; by=eq(2) ; end
    
 Ke=zeros(8);
-a=(ex(2)-ex(1))/2  ;  b=(ey(2)-ey(1))/2  ;
+a=abs((ex(2)-ex(1)))/2  ;  b=abs((ey(2)-ey(1)))/2  ;
 
 xgp=[-1 1 1 -1]/sqrt(3);
 ygp=[-1 -1 1 1]/sqrt(3); 

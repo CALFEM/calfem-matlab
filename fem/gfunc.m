@@ -15,8 +15,8 @@ function [t,g]=gfunc(G,dt);
 
 % LAST MODIFIED: K Persson 1997-04-07
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   [np nc]=size(G);
   ti=G(1,1):dt:G(np,1);

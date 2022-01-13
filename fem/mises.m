@@ -30,8 +30,8 @@ function [es,deps,st]=mises(ptype,mp,est,st);
 
 % LAST MODIFIED: M Ristinmaa 1995-10-15
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 
 G=mp(1)/2/(1+mp(2));

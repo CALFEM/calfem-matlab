@@ -27,8 +27,8 @@ function [es,et]=flw2qs(ex,ey,ep,D,ed,eq)
 
 % LAST MODIFIED: K Persson    1995-08-23
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   K=zeros(5);  f=zeros(5,1);
 

@@ -28,8 +28,8 @@ function D=dmises(ptype,mp,es,st);
 
 % LAST MODIFIED: M Ristinmaa 1995-10-25
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 iv=st;
 ny=mp(2);

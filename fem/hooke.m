@@ -18,8 +18,8 @@
 
 % LAST MODIFIED: M Ristinmaa 1995-10-25
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
  if ptype==1
         Dm=E/(1-v^2)*[1  v   0;
@@ -29,12 +29,12 @@
         Dm=E/(1+v)/(1-2*v)*[1-v  v    v        0;
                              v  1-v   v        0;
                              v   v   1-v       0;
-                             0   0    0   (1-2*v)/2];
+                             0   0    0   (1-2*v)/2];;
  elseif ptype==3
         Dm=E/(1+v)/(1-2*v)*[1-v  v    v        0;
                              v  1-v   v        0;
                              v   v   1-v       0;
-                             0   0    0   (1-2*v)/2];
+                             0   0    0   (1-2*v)/2];;
  elseif ptype==4
         Dm=E/(1+v)/(1-2*v)*[1-v  v    v    0    0    0;
                              v  1-v   v    0    0    0;

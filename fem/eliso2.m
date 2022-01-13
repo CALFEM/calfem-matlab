@@ -36,8 +36,8 @@ function eliso2(ex,ey,ed,isov,plotpar)
 
 % LAST MODIFIED: O Dahlblom 2004-10-01
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 %
  if ~((nargin==4)|(nargin==5))

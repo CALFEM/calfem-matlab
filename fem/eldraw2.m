@@ -33,8 +33,8 @@ function eldraw2(ex,ey,plotpar,elnum)
 
 % LAST MODIFIED: O Dahlblom 2004-09-28
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 %
  if ~((nargin==2)|(nargin==3)|(nargin==4))

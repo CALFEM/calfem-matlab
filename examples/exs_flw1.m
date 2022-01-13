@@ -1,4 +1,4 @@
-% example exs2 
+% example exs_flw1 
 %----------------------------------------------------------------
 % PURPOSE 
 %    Analysis of one dimensional heat flow.
@@ -51,11 +51,11 @@ echo on
 
 %----- Element flows -------------------------------------------
 
- ed1=extract(Edof(1,:),a);
- ed2=extract(Edof(2,:),a);
- ed3=extract(Edof(3,:),a);
- ed4=extract(Edof(4,:),a);
- ed5=extract(Edof(5,:),a);
+ ed1=extract_ed(Edof(1,:),a);
+ ed2=extract_ed(Edof(2,:),a);
+ ed3=extract_ed(Edof(3,:),a);
+ ed4=extract_ed(Edof(4,:),a);
+ ed5=extract_ed(Edof(5,:),a);
 
  q1=spring1s(ep1,ed1)
  q2=spring1s(ep2,ed2)

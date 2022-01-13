@@ -1,6 +1,7 @@
-  function [Tsnap,D,V]=step1(K,C,d0,ip,f,pbound)
-% Tsnap=step1(K,C,d0,ip,f,bc)
-% [Tsnap,D,V]=step1(K,C,d0,ip,f,bc)
+  function [a,da,ahist,dahist]=step1(K,C,f,a0,bc,ip,times,dofs)
+% [a,da]=step1(K,C,f,a0,bc,ip)
+% [a,da]=step1(K,C,f,a0,bc,ip,times)
+% [a,da,ahist,dahist]=step1(K,C,f,a0,bc,ip,times,dofs)
 %-------------------------------------------------------------
 % PURPOSE
 %  Algorithm for dynamic solution of first order
@@ -9,104 +10,183 @@
 % INPUT:
 %    K : conductivity matrix, dim(K)= nd x nd
 %    C : capacity matrix, dim(C)= nd x nd
-%    d0 : initial vector d(0), dim(d0)= nd x 1
-%    ip : [dt tottime alfa [nsnap nhist  t(i) ...  dof(i) ... ]] :
-%         integration and output parameters
 %    f : load vector, dim(f)= n x nstep+1, 
 %        If dim(f)= nf x 1 it is supposed that the values 
 %        are kept constant during time integration.
-%    pbound : boundary condition matrix
-%        dim(pbound)= nbc x nstep+2, 
-%        where nbc = number of prescribed degrees-of-freedom 
-%        the first column contains the degrees-of-freedom with  prescribed values
-%        and the subsequent columns contain there the time history.
-%        If dim(pbound)= nbc x 2 it is supposed that the values of the second column
-%        are kept constant during time integration.
+%    a0 : initial vector a(0), dim(a0)= nd x 1
+%    bc : boundary condition matrix
+%         dim(bc)= nbc x nstep+2, 
+%         where nbc = number of prescribed degrees-of-freedom 
+%         The first column contains the degrees-of-freedom with prescribed values
+%         and the subsequent columns contain there the time history.
+%         If dim(bc)= nbc x 2 it is supposed that the values of the second column
+%         are kept constant during time integration.
+%    ip : [dt tottime alfa],  integration parameters
+%    times: [t(i) ...] times at which output should be written to a and da.
+%    dofs: [dof(i) ... ] dofs for which output should be written to ahist and dahist.
 %
 % OUTPUT:
-%    Tsnap : output matrix containing snapshots at 'nsnap' timesteps,
-%        specified in ip, the time are also specified in ip. 
-%        dim(Tsnap)=nd x nsnap
-%    D : solution matrix containing time history of d at the selected dof's
-%        specified in ip. dim(D)=nhist x nstep+1
-%    V : solution matrix containing time history of the first time 
-%        derivative d at the selected dof's specified in ip. 
-%        dim(V)=nhist x nstep+1
+%    a : output matrix containing values of a at all timesteps,
+%        alternatively at times specified in 'times'. 
+%        dim(a)=nd x nstep+1 or dim(a)=nd x ntimes
+%    da : output matrix containing values of da at all timesteps,
+%        alternatively at times specified in 'times'. 
+%        dim(da)=nd x nstep+1 or dim(da)=nd x ntimes
+%    ahist : output matrix containing time history of a at the dofs
+%        specified in 'dofs'. 
+%        dim(ahist)=ndofs x nstep+1
+%    dahist : output matrix containing time history of da at the dofs 
+%        specified in 'dofs'. 
+%        dim(dahist)=ndofs x nstep+1
 %-------------------------------------------------------------
 
-% LAST MODIFIED: G Sandberg  1994-01-29
+% LAST MODIFIED: O Dahlblom  2022-01-10
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   [nd,nd]=size(K);
-  dt=ip(1);  tottime=ip(2);  alfa=ip(3);  
-  a1=(1-alfa)*dt;  a2=alfa*dt;
+  dt=ip(1);  
+  tottime=ip(2);  
+  alfa=ip(3);  
+  a1=(1-alfa)*dt;  
+  a2=alfa*dt;
   
   nstep=1;
-  [nr nc]=size(f); if (nc>1);         nstep = nc-1; end
-  if nargin==5;                       bound=0;      end
-  if nargin==6;   
-    [nr nc]=size(pbound); if (nc>2);  nstep = nc-2; end
-    bound=1;              if (nc==0); bound=0;      end
+  [nr nc]=size(f); 
+  if (nc>1);         
+     nstep = nc-1; 
   end
-  ns=tottime/dt;   if (ns < nstep | nstep==1); nstep=ns;     end
+    
+  [nr nc]=size(bc); 
+  if (nc>2);  
+     nstep = nc-2; 
+  end
+  bound=1;              
+  if (nc==0); 
+     bound=0;      
+  end
+  
+  ns=tottime/dt;   
+  if (ns < nstep | nstep==1); 
+     nstep=ns;     
+  end
   
   [nr nc]=size(f);
   tf = zeros(nd,nstep+1); 
-  if (nc==1);     tf(:,:)=f(:,1)*ones(1,nstep+1);  end
-  if (nc>1);      tf = f;        end
+  if (nc==1);     
+     tf(:,:)=f(:,1)*ones(1,nstep+1);  
+  end
+  if (nc>1);      
+     tf = f;        
+  end
+    
+  sa=0;
+  if (nargin<7);
+     ntimes=0;
+     sa=1;
+     a=zeros(nd,nstep+1);
+     da=zeros(nd,nstep+1);
+  else
+     ntimes=length(times);
+     if (ntimes > 0);        
+        sa=2;
+        a=zeros(nd,ntimes); 
+        da=zeros(nd,ntimes); 
+     end
+  end
+  if (nargin>=8);
+     ndofs=length(dofs);
+     if (ndofs > 0);     
+        ahist=zeros(ndofs,nstep+1); 
+        dahist=zeros(ndofs,nstep+1);
+     end
+  else
+     ndofs=0;
+  end
+ 
+  itime=1;
   
-  [nr ncip]=size(ip);
-  if (ncip >= 4);
-    nsnap=ip(4);             nhist=ip(5);
-    lists=ip(6:5+nsnap);     listh=ip(6+nsnap:ncip);
-    if (nhist > 0);     
-      [nr nc]=size(listh); D=zeros(nc,nstep+1); V=zeros(nc,nstep+1);
-    end
-    if (nsnap > 0);        Tsnap=zeros(nd,nsnap); end
-  end  
-  
-  v0=C\(tf(1)-K*d0);
-  if (nhist > 0);  D(:,1) = d0(listh); V(:,1) = v0(listh);  end 
-  tempd=zeros(nd,1);   tempv=zeros(nd,1);
+  % Calculate initial time derivative da0
+  da0=C\(tf(1)-K*a0);
+  % Save initial values
+  if(sa==1);
+     a(:,1) = a0; 
+     da(:,1) = da0; 
+  elseif(sa==2);
+     if (times(itime)== 0);  
+        a(:,itime) = a0; 
+        da(:,itime) = da0; 
+        itime=itime+1; 
+     end
+  end 
+  if (ndofs > 0);  
+     ahist(:,1) = a0(dofs); 
+     dahist(:,1) = da0(dofs);  
+  end 
+  % Reduce matrices due to bcs  
+  tempa=zeros(nd,1);   
+  tempda=zeros(nd,1);
   fdof=[1:nd]';
   if (bound==1);
-    [nr nc]=size(pbound); 
-    if (nc==2);
-      pd=pbound(:,2)*ones(1,nstep+1);      pv=zeros(nr,nstep+1);
-    end
-    if (nc>2);
-      pd=pbound(:,2:nstep+2);      pv(:,1)=(pd(:,2)-pd(:,1))/dt;
-      pv(:,2:nstep+1)=(pd(:,2:nstep+1)-pd(:,1:nstep))/dt;
-    end
-    pdof=pbound(:,1); fdof(pdof)=[];
-    Keff=C(fdof,fdof)+a2*K(fdof,fdof);
+     [nr nc]=size(bc); 
+     if (nc==2);
+         pa=bc(:,2)*ones(1,nstep+1);      
+         pda=zeros(nr,nstep+1);
+     end
+     if (nc>2);
+         pa=bc(:,2:nstep+2);      
+         pda(:,1)=(pa(:,2)-pa(:,1))/dt;
+         pda(:,2:nstep+1)=(pa(:,2:nstep+1)-pa(:,1:nstep))/dt;
+     end
+     pdof=bc(:,1); fdof(pdof)=[];
+     Keff=C(fdof,fdof)+a2*K(fdof,fdof);
   end
-  if (bound==0);    Keff=C+a2*K;       end 
+  if (bound==0);    
+      Keff=C+a2*K;       
+  end 
   [L,U]=lu(Keff);
-  dnew=d0(fdof);  vnew=v0(fdof);
+  anew=a0(fdof);  
+  danew=da0(fdof);
 
-  isnap=1;
+  % Iterate over time steps
   for j = 1:nstep
-    time=dt*j;
-    dold=dnew;    vold=vnew;    dpred=dold+a1*vold;
-    if (bound==0);    reff=tf(:,j+1)-K*dpred;  end
-    if (bound==1); 
-      pdeff=C(fdof,pdof)*pv(:,j+1)+K(fdof,pdof)*pd(:,j+1);
-      reff = tf(fdof,j+1)-K(fdof,fdof)*dpred-pdeff;
-    end
-    y=L\reff;         vnew=U\y;      dnew=dpred+a2*vnew;
-    if (nhist > 0 | nsnap > 0);
-      if (bound==1);  tempd(pdof)=pd(:,j+1);  tempv(pdof)=pv(:,j+1); end
-      tempd(fdof)=dnew;         tempv(fdof)=vnew;
-      if (nhist > 0);
-        D(:,j+1) = tempd(listh);  V(:,j+1) = tempv(listh);
-      end
-      if ((nsnap > 0)  & (isnap <= nsnap));
-        if (time >= lists(isnap)); Tsnap(:,isnap) = tempd; isnap=isnap+1; end
-      end
-    end
+     time=dt*j;
+     aold=anew;    
+     daold=danew;    
+     apred=aold+a1*daold;
+     if (bound==0);    
+        reff=tf(:,j+1)-K*apred;  
+     end
+     if (bound==1); 
+        pdeff=C(fdof,pdof)*pda(:,j+1)+K(fdof,pdof)*pa(:,j+1);
+        reff = tf(fdof,j+1)-K(fdof,fdof)*apred-pdeff;
+     end
+     y=L\reff;         
+     danew=U\y;      
+     anew=apred+a2*danew;
+    % Save to a, da, ahist and dahist
+     if (bound==1);  
+        tempa(pdof)=pa(:,j+1);  
+        tempda(pdof)=pda(:,j+1); 
+     end
+     tempa(fdof)=anew;         
+     tempda(fdof)=danew;
+     if(sa==1);
+        a(:,j+1) = tempa;  
+        da(:,j+1) = tempda; 
+     elseif(sa==2);
+        if ((ntimes > 0)  && (itime <= ntimes));
+           if (time >= times(itime)); 
+              a(:,itime) = tempa;  
+              da(:,itime) = tempda; 
+              itime=itime+1; 
+           end
+        end
+        if (ndofs > 0);
+           ahist(:,j+1) = tempa(dofs);  
+           dahist(:,j+1) = tempda(dofs);
+        end
+     end
   end
-end
 %--------------------------end--------------------------------
