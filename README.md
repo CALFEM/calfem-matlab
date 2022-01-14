@@ -2,7 +2,7 @@
 CALFEM, a finite element toolbox for MATLAB.
 
 ### Manual
-The full CALFEM manual can be accessed here: [calfem-3.6-manual.pdf](https://github.com/CALFEM/calfem-matlab/raw/master/calfem34.pdf)
+The full CALFEM manual can be accessed here: [calfem-3.6-manual.pdf](https://github.com/CALFEM/calfem-matlab/blob/develop/calfem-3.6-manual.pdf)
 
 ### Installation instructions
 
