@@ -1,27 +1,30 @@
 % CALFEM - Users manual example scripts.
-% Version 3.4  2004-10-07
+% Version 3.6  2022-01-14
 %
-% Copyright (c)  Division of Structural Mechanics
-%                Lund Institute of Technology
+% Copyright (c)  Division of Structural Mechanics and
+%                Division of Solid Mechanics
+%                Lund University
 %------------------------------------------------------------------------------
 % Static analysis examples.
-%   exs1   - Linear spring system.
-%   exs2   - One dimensional heat flow.
-%   exs3   - Plane truss.
-%   exs4a  - Plane truss analysed using loops.
-%   exs4b  - Plane truss analysed using loops and extraction of element 
-%            coordinates from a global coordinate matrix
-%   exs5   - Simply supported beam.
-%   exs6   - Plane frame.
-%   exs7   - Geometry stabilized with bars.
-%   exs8   - Two dimensional diffusion.
+%   exs_spring    - Linear spring system.
+%   exs_flw_temp1 - One dimensional heat flow.
+%   exs_bar2      - Plane truss.
+%   exs_bar2_la   - Plane truss analysed using loops.
+%   exs_bar2_lb   - Plane truss analysed using loops and extraction of  
+%                   element coordinates from a global coordinate matrix
+%   exs_beam1     - Simply supported beam.
+%   exs_beam2     - Plane frame.
+%   exs_beambar2  - Combined beam and bar strucure.
+%   exs_flw_diff2 - Two dimensional diffusion.
 %
 % Dynamic analysis examples.
-%   exd1   - Modal analysis of frame.
-%   exd2   - Transient analysis.
-%   exd3   - Reduced system transient analysis.
-%   exd4   - Time varying boundary condition.
+%   exd_beam2_m   - Modal analysis of frame.
+%   exd_beam2_t   - Transient analysis of frame.
+%   exd_beam2_tr  - Reduced system transient analysis.
+%   exd_beam2_b   - Time dependent boundary conditions.
 %
 % Non-linear analysis examples
-%   exn1   - Second order theory analysis of a frame.
-%   exn2   - Buckling analysis of a frame.
+%   exn_bar2g     - Plane truss considering geometric nonlinearity.
+%   exn_beam2g    - Plane frame considering geometric nonlinearity.
+%   exn_beam2g_b  - Buckling analysis of a frame.
+%   exn_bar2m     - Plane truss considering material nonlinearity.
