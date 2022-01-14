@@ -29,8 +29,8 @@ function [es,et,eci]=flw2i8s(ex,ey,ep,D,ed)
 
 % LAST MODIFIED: K Persson    1995-08-24
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   t=ep(1); ir=ep(2); ngp=ir*ir;
 

@@ -11,11 +11,10 @@ function arrow2(x0,y0,la,fi,loc,s)
 % OUTPUT: 
 %-------------------------------------------------------------
 
-%    REFERENCES
-%        P-E AUSTRELL 1994-01-06 
-% Copyright (c) 1991-94 by Division of Structural Mechanics and
-%                          Department of Solid Mechanics.
-%                          Lund Institute of Technology
+% LAST MODIFIED: P-E AUSTRELL 1994-01-06 
+% Copyright (c)  Division of Structural Mechanics and
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   xyl0=[-0.5 0.35 0.35 0.5 0.35 0.35;
          0   0  -0.05  0  0.05  0  ];

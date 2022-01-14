@@ -1,4 +1,4 @@
-% example exs3 
+% example exs_bar2 
 %----------------------------------------------------------------
 % PURPOSE 
 %    Analysis of a plane truss.
@@ -52,12 +52,40 @@ echo on
 
 %----- Element forces -------------------------------------------
 
- ed1=extract(Edof(1,:),a);
+ ed1=extract_ed(Edof(1,:),a);
  N1=bar2s(ex1,ey1,ep1,ed1)
- ed2=extract(Edof(2,:),a);
+ ed2=extract_ed(Edof(2,:),a);
  N2=bar2s(ex2,ey2,ep2,ed2)
- ed3=extract(Edof(3,:),a);	
+ ed3=extract_ed(Edof(3,:),a);	
  N3=bar2s(ex3,ey3,ep3,ed3)
  
+ %----- Draw deformed truss ---------------------------------------
+ 
+ figure(1)
+ plotpar=[2 1 0];
+ eldraw2(ex1,ey1,plotpar);
+ eldraw2(ex2,ey2,plotpar);
+ eldraw2(ex3,ey3,plotpar);
+ sfac=scalfact2(ex1,ey1,ed1,0.1);
+ plotpar=[1 2 1];
+ eldisp2(ex1,ey1,ed1,plotpar,sfac);
+ eldisp2(ex2,ey2,ed2,plotpar,sfac);
+ eldisp2(ex3,ey3,ed3,plotpar,sfac);
+ axis([-0.4 2.0 -0.4 1.4]); 
+ scalgraph2(sfac,[1e-3 0 -0.3]);
+ title('Displacements')
+ 
+%----- Draw normal force diagram --------------------------------
+ 
+ figure(2)
+ plotpar=[2 1];
+ sfac=scalfact2(ex1,ey1,N2(:,1),0.1);
+ secforce2(ex1,ey1,N1(:,1),plotpar,sfac);
+ secforce2(ex2,ey2,N2(:,1),plotpar,sfac);
+ secforce2(ex3,ey3,N3(:,1),plotpar,sfac);
+ axis([-0.4 2.0 -0.4 1.4]);
+ scalgraph2(sfac,[5e4 0 -0.3]);
+ title('Normal force')
+
 %---------------------------- end -------------------------------
  echo off

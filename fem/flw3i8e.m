@@ -26,8 +26,8 @@ function [Ke,fe]=flw3i8e(ex,ey,ez,ep,D,eq)
 
 % LAST MODIFIED: K Persson    1995-08-24
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   ir=ep(1);  ngp=ir*ir*ir;
   if nargin==5; eq=0 ; end

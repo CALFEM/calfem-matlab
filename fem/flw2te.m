@@ -21,10 +21,10 @@ function [Ke,fe]=flw2te(ex,ey,ep,D,eq)
 %         fe :  element load vector (3 x 1)
 %-------------------------------------------------------------
 
-% LAST MODIFIED: K Persson   1995-08-23
-% Copyright (c) 1991-94 by Division of Structural Mechanics and
-%                          Department of Solid Mechanics.
-%                          Lund Institute of Technology
+% LAST MODIFIED: K Persson  1995-08-23
+% Copyright (c)  Division of Structural Mechanics and
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   t=ep(1);
   if nargin==4; eq=0; end 

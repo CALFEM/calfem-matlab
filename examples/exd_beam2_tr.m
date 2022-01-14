@@ -1,15 +1,16 @@
-% example exd3
+% example exd_beam2_tr
 %----------------------------------------------------------------
 % PURPOSE 
 %    Structural Dynamics, time integration, reduced system.
 %
-%    Note: example exd1.m must be run first.
+%    Note: example exd_beam2_m.m must be run first.
 %
 %----------------------------------------------------------------
 
 % REFERENCES
-%     G"oran Sandberg 1994-03-08
-%     Karl-Gunnar Olsson 1995-09-29 
+%     Göran Sandberg 1994-03-08
+%     Karl-Gunnar Olsson 1995-09-29
+%     Ola Dahlblom 2022-01-13
 %----------------------------------------------------------------
 figure(1); clf; figure(2); clf;
 echo on
@@ -24,18 +25,18 @@ fr=sparse([[1:1:nev]' Egv(:,1:nev)'*f]);
 kr=sparse(diag(diag(Egv(:,1:nev)'*K*Egv(:,1:nev))));
 mr=sparse(diag(diag(Egv(:,1:nev)'*M*Egv(:,1:nev))));
 % ----- initial condition ---------------------------------------
-dr0=zeros(nev,1);                    vr0=zeros(nev,1);
+ar0=zeros(nev,1);                    dar0=zeros(nev,1);
 % ----- output parameters ---------------------------------------
-ntimes=[0.1:0.1:1];    nhistr=[1:1:nev];   nhist=[4 11];
+times=[0.1:0.1:1];    dofsr=[1:1:nev];   dofs=[4 11];
 % ----- time integration parameters -----------------------------
-ip=[dt T 0.25 0.5 10 nev ntimes nhistr];
+ip=[dt T 0.25 0.5];
 % ----- time integration ----------------------------------------
-[Dsnapr,Dr,Vr,Ar]=step2(kr,[],mr,dr0,vr0,ip,fr,[]);
+[ar,dar,d2ar,arhist,darhist,d2arhist]=step2(kr,[],mr,fr,ar0,dar0,[],ip,times,dofsr);
 % ----- mapping back to original coordinate system --------------
-DsnapR=Egv(:,1:nev)*Dsnapr;
-DR=Egv(nhist,1:nev)*Dr;
+aR=Egv(:,1:nev)*ar;
+aRhist=Egv(dofs,1:nev)*arhist;
 % ----- plot time history for two DOF:s -------------------------
-figure(1), plot(t,DR(1,:),'-',t,DR(2,:),'--')
+figure(1), plot(t,aRhist(1,:),'-',t,aRhist(2,:),'--')
 axis([0    1.0000   -0.0100    0.0200])
 grid, xlabel('time (sec)'), ylabel('displacement (m)')
 title('Displacement(time) at the 4th and 11th degree-of-freedom')

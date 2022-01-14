@@ -24,8 +24,8 @@ function [es,et]=flw2ts(ex,ey,D,ed)
 
 % LAST MODIFIED: K Persson    1997-04-14
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   C = [ones(3,1) ex' ey' ];
   

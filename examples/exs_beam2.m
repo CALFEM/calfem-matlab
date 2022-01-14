@@ -1,14 +1,15 @@
-% example exs6 
+% example exs_beam2 
 %----------------------------------------------------------------
 % PURPOSE 
 %    Analysis of a plane frame.
 %----------------------------------------------------------------
 
 % REFERENCES
-%     G"oran Sandberg 94-03-08 
-%     Karl-Gunnar Olsson 95-09-28
-%     Anders Olsson 99-03-01
+%     Göran Sandberg 1994-03-08 
+%     Karl-Gunnar Olsson 1995-09-28
+%     Anders Olsson 1999-03-01
 %     Ola Dahlblom 2004-09-14
+%     Ola Dahlblom 2019-12-16
 %----------------------------------------------------------------
  echo on
 
@@ -32,9 +33,7 @@
  ep1=[E A1 I1];	 ep3=[E A2 I2];
  ex1=[0 0];      ex2=[6 6];	     ex3=[0 6];
  ey1=[4 0];      ey2=[4 0];	     ey3=[4 4];
- eq1=[0 0];
- eq2=[0 0];
- eq3=[0 -10e+3];
+ eq1=[0 0];      eq2=[0 0];      eq3=[0 -10e+3];
 
  Ke1=beam2e(ex1,ey1,ep1);
  Ke2=beam2e(ex2,ey2,ep1);
@@ -53,11 +52,11 @@
 
 %----- Section forces -------------------------------------------
 
- Ed=extract(Edof,a);
+ Ed=extract_ed(Edof,a);
 
- es1=beam2s(ex1,ey1,ep1,Ed(1,:),eq1,21) 
- es2=beam2s(ex2,ey2,ep1,Ed(2,:),eq2,21) 
- es3=beam2s(ex3,ey3,ep3,Ed(3,:),eq3,21) 
+ [es1,edi1]=beam2s(ex1,ey1,ep1,Ed(1,:),eq1,21) 
+ [es2,edi2]=beam2s(ex2,ey2,ep1,Ed(2,:),eq2,21) 
+ [es3,edi3]=beam2s(ex3,ey3,ep3,Ed(3,:),eq3,21) 
 
  %----- Draw deformed frame ---------------------------------------
  
@@ -66,51 +65,50 @@
  eldraw2(ex1,ey1,plotpar);
  eldraw2(ex2,ey2,plotpar);
  eldraw2(ex3,ey3,plotpar);
- sfac=scalfact2(ex3,ey3,Ed(3,:),0.1);
+ sfac=scalfact2(ex3,ey3,edi3,0.1);
  plotpar=[1 2 1];
- eldisp2(ex1,ey1,Ed(1,:),plotpar,sfac);
- eldisp2(ex2,ey2,Ed(2,:),plotpar,sfac);
- eldisp2(ex3,ey3,Ed(3,:),plotpar,sfac);
+ dispbeam2(ex1,ey1,edi1,plotpar,sfac);
+ dispbeam2(ex2,ey2,edi2,plotpar,sfac);
+ dispbeam2(ex3,ey3,edi3,plotpar,sfac);
  axis([-1.5 7.5 -0.5 5.5]); 
- pltscalb2(sfac,[1e-2 0.5 0]);
- axis([-1.5 7.5 -0.5 5.5]);
- title('displacements')
+ scalgraph2(sfac,[1e-2 0.5 0]);
+ title('Displacements')
  
 %----- Draw normal force diagram --------------------------------
  
  figure(2)
  plotpar=[2 1];
  sfac=scalfact2(ex1,ey1,es1(:,1),0.2);
- eldia2(ex1,ey1,es1(:,1),plotpar,sfac);
- eldia2(ex2,ey2,es2(:,1),plotpar,sfac);
- eldia2(ex3,ey3,es3(:,1),plotpar,sfac);
+ secforce2(ex1,ey1,es1(:,1),plotpar,sfac);
+ secforce2(ex2,ey2,es2(:,1),plotpar,sfac);
+ secforce2(ex3,ey3,es3(:,1),plotpar,sfac);
  axis([-1.5 7.5 -0.5 5.5]);
- pltscalb2(sfac,[3e4 1.5 0]);
- title('normal force')
+ scalgraph2(sfac,[3e4 1.5 0]);
+ title('Normal force')
 
 %----- Draw shear force diagram ---------------------------------
  
  figure(3)
  plotpar=[2 1];
  sfac=scalfact2(ex3,ey3,es3(:,2),0.2);
- eldia2(ex1,ey1,es1(:,2),plotpar,sfac);
- eldia2(ex2,ey2,es2(:,2),plotpar,sfac);
- eldia2(ex3,ey3,es3(:,2),plotpar,sfac);
+ secforce2(ex1,ey1,es1(:,2),plotpar,sfac);
+ secforce2(ex2,ey2,es2(:,2),plotpar,sfac);
+ secforce2(ex3,ey3,es3(:,2),plotpar,sfac);
  axis([-1.5 7.5 -0.5 5.5]);
- pltscalb2(sfac,[3e4 0.5 0]);
- title('shear force') 
+ scalgraph2(sfac,[3e4 0.5 0]);
+ title('Shear force') 
 
 %----- Draw moment diagram --------------------------------------
  
  figure(4)
  plotpar=[2 1];
  sfac=scalfact2(ex3,ey3,es3(:,3),0.2);
- eldia2(ex1,ey1,es1(:,3),plotpar,sfac);
- eldia2(ex2,ey2,es2(:,3),plotpar,sfac);
- eldia2(ex3,ey3,es3(:,3),plotpar,sfac);
+ secforce2(ex1,ey1,es1(:,3),plotpar,sfac);
+ secforce2(ex2,ey2,es2(:,3),plotpar,sfac);
+ secforce2(ex3,ey3,es3(:,3),plotpar,sfac);
  axis([-1.5 7.5 -0.5 5.5]);
- pltscalb2(sfac,[3e4 0.5 0]);
- title('moment') 
+ scalgraph2(sfac,[3e4 0.5 0]);
+ title('Moment') 
 
 %------------------------ end -----------------------------------
  echo off

@@ -27,8 +27,8 @@
  
 % LAST MODIFIED: K Persson    1995-08-23
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   b=[ ex(2)-ex(1); ey(2)-ey(1) ];
   L=sqrt(b'*b);  n=b/L;

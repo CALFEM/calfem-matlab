@@ -14,8 +14,8 @@
 
 % LAST MODIFIED: M Ristinmaa 1993-10-30
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
     [nie,n]=size(edof);
     t=edof(:,2:n);

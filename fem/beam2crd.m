@@ -13,8 +13,8 @@
 
 % LAST MODIFIED: P-E AUSTRELL 1993-10-15
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 %   
   [nie,ned]=size(ed);

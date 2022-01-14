@@ -11,8 +11,8 @@ function [Ke]=spring1e(ep);
 
 % LAST MODIFIED: P-E Austrell 1994-11-02
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 k = ep;  
 Ke = [ k -k;

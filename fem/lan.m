@@ -27,8 +27,8 @@
 %
 % LAST MODIFIED: H Carlsson 1993-09-19
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------------------
 
 [nr,nc] = size(K);

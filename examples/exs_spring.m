@@ -1,4 +1,4 @@
-% example exs1 
+% example exs_spring 
 %----------------------------------------------------------------
 % PURPOSE 
 %    Linear elastic spring analysis. Introduction to the basic 
@@ -42,9 +42,9 @@ echo on
 
 %----- Element forces -------------------------------------------
 
- ed1=extract(Edof(1,:),a)
- ed2=extract(Edof(2,:),a)
- ed3=extract(Edof(3,:),a)
+ ed1=extract_ed(Edof(1,:),a)
+ ed2=extract_ed(Edof(2,:),a)
+ ed3=extract_ed(Edof(3,:),a)
 
  es1=spring1s(ep2,ed1)
  es2=spring1s(ep1,ed2)

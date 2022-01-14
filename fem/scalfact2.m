@@ -17,8 +17,9 @@ function [sfac]=scalfact2(ex,ey,ed,rat)
 %-------------------------------------------------------------
 
 % LAST MODIFIED: O Dahlblom  2004-09-15
-% Copyright (c)  Division of Structural Mechanics.
-%                Lund Institute of Technology
+% Copyright (c)  Division of Structural Mechanics and
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 %
  if ~((nargin==3)|(nargin==4))

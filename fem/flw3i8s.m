@@ -31,8 +31,8 @@ function [es,et,eci]=flw3i8s(ex,ey,ez,ep,D,ed)
 
 % LAST MODIFIED: K Persson    1995-08-25
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 ir=ep(1);  ngp=ir*ir*ir;
 
@@ -98,7 +98,7 @@ ir=ep(1);  ngp=ir*ir*ir;
   dNr=dNr/8.;
 
 
-  eci=N*[ex;ey;ez]';  [red,ced]=size(ed);
+  eci=N*[ex;ey;ex]';  [red,ced]=size(ed);
   JT=dNr*[ex;ey;ez]';
 
   for i=1:ngp

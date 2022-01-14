@@ -20,8 +20,8 @@
 
 % LAST MODIFIED: M Ristinmaa  1995-10-25
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   ptype=ep(1); t=ep(2); ir=ep(3); ngp=ir*ir;
    

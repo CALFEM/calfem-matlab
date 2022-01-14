@@ -21,8 +21,8 @@ function [Y]=dyna2f(w2,xi,f,p,dt)
 
 % LAST MODIFIED: H Carlsson  1993-10-08
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 [neq nc]=size(w2);
 N=length(p);

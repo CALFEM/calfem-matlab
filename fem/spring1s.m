@@ -14,8 +14,8 @@ function [es]=spring1s(ep,ed)
 
 % LAST MODIFIED: P-E AUSTRELL 1994-11-02
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   k = ep;  
   u=ed;

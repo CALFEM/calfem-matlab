@@ -17,8 +17,8 @@
 
 % LAST MODIFIED: G Sandberg  1993-11-07
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %----------------------------------------------------------
 nr=length(d);
 if (nr<=80);             f2=64;  end

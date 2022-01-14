@@ -34,7 +34,7 @@ function [sfac]=eldisp2(ex,ey,ed,plotpar,sfac)
 % LAST MODIFIED: O Dahlblom 2004-10-01
 % Copyright (c)  Division of Structural Mechanics and
 %                Division of Solid Mechanics.
-%                Lund Institute of Technology
+%                Lund University
 %-------------------------------------------------------------
 %
  if ~((nargin==3)|(nargin==4)|(nargin==5))

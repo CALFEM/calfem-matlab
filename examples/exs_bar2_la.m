@@ -1,14 +1,14 @@
-% example exs4b 
+% example exs_bar2_la 
 %----------------------------------------------------------------
 % PURPOSE 
-%    Analysis of a plane truss using loops and extraction of  
-%    element coordinates from a global coordinate matrix
+%    Analysis of a plane truss using loops.
 %----------------------------------------------------------------
 
 % REFERENCES
 %     P-E Austrell 1994-03-08 
 %     K-G Olsson 1995-09-28
 %     O Dahlblom 2004-08-31
+%     O Dahlblom 2019-12-16
 %----------------------------------------------------------------
 
 echo on 
@@ -30,37 +30,42 @@ echo on
 
  K=zeros(12); 
  f=zeros(12,1);  f(11)=0.5e6*sin(pi/6);  f(12)=-0.5e6*cos(pi/6);
+ f
 
 %----- Element properties ---------------------------------------
 
  A=25.0e-4;	  E=2.1e11;   ep=[E A];	
 
-%----- Global coordinates and topology --------------------------
+%----- Element coordinates --------------------------------------
 
- Coord=[0 2;
-        0 0;
-        2 2;
-        2 0;
-        4 2;
-        4 0];
+ ex=[0 2;
+     0 2;
+     2 4;
+     2 4;
+     2 2;
+     4 4;
+     0 2;
+     2 4;
+     0 2;
+     2 4];
  
- Dof=[ 1  2;
-       3  4;
-       5  6;
-       7  8;
-       9 10;
-      11 12];
+ ey=[2 2;
+     0 0;
+     2 2;
+     0 0;
+     0 2;
+     0 2;
+     0 2;
+     0 2;
+     2 0;
+     2 0];
  
-%----- Element coordinates -------------------------------------- 
-
- [Ex,Ey]=coordxtr(Edof,Coord,Dof,2);
-
 %----- Create element stiffness matrices Ke and assemble into K -
 
  for i=1:10
-    Ke=bar2e(Ex(i,:),Ey(i,:),ep);
+    Ke=bar2e(ex(i,:),ey(i,:),ep);
     K=assem(Edof(i,:),K,Ke);
- end
+ end;
  
 %----- Solve the system of equations ----------------------------
 
@@ -69,13 +74,13 @@ echo on
 
 %----- Element forces -------------------------------------------
 
- ed=extract(Edof,a);
+ ed=extract_ed(Edof,a);
 
  for i=1:10
-    N(i,:)=bar2s(ex(i,:),ey(i,:),ep,ed(i,:));
+    es=bar2s(ex(i,:),ey(i,:),ep,ed(i,:));
+    N(i,:)=es(1);
  end
  N
  
 %---------------------------- end -------------------------------
  echo off
-

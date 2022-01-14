@@ -18,8 +18,8 @@
 
 % LAST MODIFIED: M Ristinmaa 1993-08-25
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   [nd,nd]=size(K);
 %

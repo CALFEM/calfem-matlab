@@ -1,5 +1,6 @@
-function [Ke]=bar2e(ex,ey,ep)
+function [Ke,fe]=bar2e(ex,ey,ep,eq)
 % Ke=bar2e(ex,ey,ep)
+% [Ke,fe]=bar2e(ex,ey,ep,eq)
 %----------------------------------------------------------------------
 % PURPOSE
 %  Compute the element stiffness matrix for two dimensional bar element.
@@ -9,25 +10,35 @@ function [Ke]=bar2e(ex,ey,ep)
 %
 %         ep = [E A]         E: Young's modulus
 %                            A: Cross section area
+%         eq = [qX]          distributed load, local direction
 %
-% OUTPUT: Ke : stiffness matrix, dim(Ke)= 4 x 4
+% OUTPUT: Ke : stiffness matrix (4 x 4)
+%         fe : element load vector (4 x 1)
 %----------------------------------------------------------------------
 
-% LAST MODIFIED: K Persson    1995-08-23
+% LAST MODIFIED: O Dahlblom    2015-10-20
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
   E=ep(1);  A=ep(2); 
+  DEA=E*A;
+  
+  qX=0; if nargin>3; qX=eq(1); end
 
-  b=[ ex(2)-ex(1); ey(2)-ey(1) ];
-  L=sqrt(b'*b);
+  dx=ex(2)-ex(1);
+  dy=ey(2)-ey(1);
+  L=sqrt(dx*dx+dy*dy);
 
-  Kle=E*A/L*[ 1 -1; 
+  Kle=DEA/L*[ 1 -1; 
              -1  1];
 
-  n=b'/L;  G=[   n      zeros(size(n));  
-              zeros(size(n))     n   ];
+  fle=L*[qX/2 qX/2]';
 
-  Ke=G'*Kle*G;
+  nxX=dx/L;
+  nyX=dy/L;
+  G=[nxX nyX  0   0 ;  
+      0   0  nxX nyX];
+
+  Ke=G'*Kle*G;   fe=G'*fle;
 %--------------------------end--------------------------------

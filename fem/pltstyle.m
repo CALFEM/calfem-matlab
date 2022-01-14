@@ -21,8 +21,8 @@ function [s1,s2]=pltstyle(plotpar)
 
 % LAST MODIFIED: Ola Dahlblom 2004-09-15
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
 %
  if plotpar(1)==1 ; s1='-';

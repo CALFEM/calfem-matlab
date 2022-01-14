@@ -25,8 +25,8 @@ function [Ex,Ey,Ez]=coordxtr(Edof,Coord,Dof,nen)
 
 % LAST MODIFIED: P-E Austrell 1993-10-14 
 % Copyright (c)  Division of Structural Mechanics and
-%                Department of Solid Mechanics.
-%                Lund Institute of Technology
+%                Division of Solid Mechanics.
+%                Lund University
 %-------------------------------------------------------------
     [nel,dum]=size(Edof);
      ned=dum-1;

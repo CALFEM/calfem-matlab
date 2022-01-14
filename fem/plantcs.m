@@ -27,7 +27,7 @@
 % LAST MODIFIED: A Olsson    2002-12-16
 % Copyright (c)  Division of Structural Mechanics and
 %                Division of Solid Mechanics.
-%                Lund Institute of Technology
+%                Lund University
 %-------------------------------------------------------------
 
 ptype=ep(1); t=ep(2); E=ep(3); v=ep(4); 
