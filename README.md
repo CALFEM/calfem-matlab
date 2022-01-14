@@ -4,7 +4,7 @@ CALFEM, a finite element toolbox for MATLAB.
 ### Manual
 The full CALFEM manual can be accessed here: [calfem-3.6-manual-full.pdf](https://github.com/CALFEM/calfem-matlab/blob/master/calfem-3.6-manual-full.pdf)
 
-A subset for beam and bars can be accessed here: [calfem-3.6-manual-bar-beam.full.pdf](https://github.com/CALFEM/calfem-matlab/blob/master/calfem-3.6-manual-bar-beam.pdf)
+A subset for beam and bars can be accessed here: [calfem-3.6-manual-bar-beam.pdf](https://github.com/CALFEM/calfem-matlab/blob/master/calfem-3.6-manual-bar-beam.pdf)
 
 ### Installation instructions
 
