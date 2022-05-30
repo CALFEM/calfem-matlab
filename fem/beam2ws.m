@@ -36,7 +36,7 @@
 %
 % -------------------------------------------------------------------------
  
-% LAST MODIFIED: O Dahlblom 2021-09-01
+% LAST MODIFIED: O Dahlblom 2022-05-30
 % Copyright (c)  Division of Structural Mechanics and
 %                Division of Solid Mechanics.
 %                Lund University
@@ -86,8 +86,8 @@
   u=[one X]*C1a;
   du=[zero one]*C1a;
   if DEA~=0; 
-    u=u+ka/DEA*[(x.^2-L*x)/2 (x.^3-L^2*x)/6]*C1a-(x.^2-L*x)*qx/(2*DEA);
-    du=du+ka/DEA*[(2*x-L)/2 (3*x.^2-L^2)/6]*C1a-(2*x-L)*qx/(2*DEA);
+    u=u+kX/DEA*[(X.^2-L*X)/2 (X.^3-L^2*X)/6]*C1a-(X.^2-L*X)*qX/(2*DEA);
+    du=du+kX/DEA*[(2*X-L)/2 (3*X.^2-L^2)/6]*C1a-(2*X-L)*qX/(2*DEA);
   end; 
   v=[one X X.^2 X.^3]*C2a;
   d2v=[zero zero 2*one 6*X]*C2a;
