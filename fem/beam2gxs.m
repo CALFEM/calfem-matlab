@@ -106,10 +106,10 @@
      d2v=[zero zero -k^2*cos(k.*X) -k^2*sin(k.*X)]*C2a;
      d3v=[zero zero k^3*sin(k.*X) -k^3*cos(k.*X)]*C2a;
       if DEI~=0;
-         v=v+qY*L^4/(2*DEI)*((1+cos(kL))/(kL^3*sin(kL))*(-1+cos(k.*X))+sin(k.*X)/kL^3+X.*(-1+X./L)/(kL^2*L))
-         dv=dv+qY*L^3/(2*DEI)*((1+cos(kL))/(kL^2*sin(kL))*(-sin(k.*X))+cos(k.*X)/kL^2+(-1+2*X./L)/kL^2)
-         d2v=d2v+qY*L^2/(2*DEI)*((1+cos(kL))/(kL*sin(kL))*(-cos(k.*X))-sin(k.*X)/kL+2/(kL^2)) 
-         d3v=d3v+qY*L/(2*DEI)*((1+cos(kL))/sin(kL)*(sin(k.*X))-cos(k.*X))
+         v=v+qY*L^4/(2*DEI)*((1+cos(kL))/(kL^3*sin(kL))*(-1+cos(k.*X))+sin(k.*X)/kL^3+X.*(-1+X./L)/(kL^2*L));
+         dv=dv+qY*L^3/(2*DEI)*((1+cos(kL))/(kL^2*sin(kL))*(-sin(k.*X))+cos(k.*X)/kL^2+(-1+2*X./L)/kL^2);
+         d2v=d2v+qY*L^2/(2*DEI)*((1+cos(kL))/(kL*sin(kL))*(-cos(k.*X))-sin(k.*X)/kL+2/(kL^2)); 
+         d3v=d3v+qY*L/(2*DEI)*((1+cos(kL))/sin(kL)*(sin(k.*X))-cos(k.*X));
       end;
   elseif QX>eps*DEI/L^2
      k=sqrt(QX/DEI);
@@ -125,10 +125,10 @@
      d2v=[zero zero k^2*cosh(k.*X) k^2*sinh(k.*X)]*C2a;
      d3v=[zero zero k^3*sinh(k.*X) k^3*cosh(k.*X)]*C2a;
       if DEI~=0;
-         v=v+qY*L^4/(2*DEI)*((1+cosh(kL))/(kL^3*sinh(kL))*(-1+cosh(k.*X))-sinh(k.*X)/kL^3+X.*(1-X./L)/(kL^2*L))
-         dv=dv+qY*L^3/(2*DEI)*((1+cosh(kL))/(kL^2*sinh(kL))*(sinh(k.*X))-cosh(k.*X)/kL^2+(1-2*X./L)/kL^2)
-         d2v=d2v+qY*L^2/(2*DEI)*((1+cosh(kL))/(kL*sinh(kL))*(cosh(k.*X))-sinh(k.*X)/kL-2/(kL^2)) 
-         d3v=d3v+qY*L/(2*DEI)*((1+cosh(kL))/sinh(kL)*(sinh(k.*X))-cosh(k.*X))
+         v=v+qY*L^4/(2*DEI)*((1+cosh(kL))/(kL^3*sinh(kL))*(-1+cosh(k.*X))-sinh(k.*X)/kL^3+X.*(1-X./L)/(kL^2*L));
+         dv=dv+qY*L^3/(2*DEI)*((1+cosh(kL))/(kL^2*sinh(kL))*(sinh(k.*X))-cosh(k.*X)/kL^2+(1-2*X./L)/kL^2);
+         d2v=d2v+qY*L^2/(2*DEI)*((1+cosh(kL))/(kL*sinh(kL))*(cosh(k.*X))-sinh(k.*X)/kL-2/(kL^2)); 
+         d3v=d3v+qY*L/(2*DEI)*((1+cosh(kL))/sinh(kL)*(sinh(k.*X))-cosh(k.*X));
       end;
   else
      C2=[1       0       0          0;
@@ -153,6 +153,6 @@
   N=QX+dv.*V;
   es=[N V M];
   edi=[u v];
-  eci=X
+  eci=X;
   %--------------------------------- end -------------------------------------
  

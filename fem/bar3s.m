@@ -33,7 +33,7 @@ function [es,edi,eci]=bar3s(ex,ey,ez,ep,ed,eq,n)
 %
 %-------------------------------------------------------------
 
-% LAST MODIFIED: O. Dahlblom    2021-09-01
+% LAST MODIFIED: O. Dahlblom    2022-11-21
 % Copyright (c)  Division of Structural Mechanics and
 %                Division of Solid Mechanics.
 %                Lund University
@@ -53,7 +53,7 @@ function [es,edi,eci]=bar3s(ex,ey,ez,ep,ed,eq,n)
   
   dx=ex(2)-ex(1);
   dy=ey(2)-ey(1);
-  dy=ez(2)-ez(1);
+  dz=ez(2)-ez(1);
   L=sqrt(dx*dx+dy*dy+dz*dz);
 % b=[ ex(2)-ex(1); ey(2)-ey(1); ez(2)-ez(1) ];
 % L=sqrt(b'*b);

@@ -1,10 +1,10 @@
- function [es,QX,edi,eci]=bar2gs(ex,ey,ep,ed)
+function [es,QX,edi,eci]=bar2gs(ex,ey,ep,ed,n)
 % [es,QX]=bar2gs(ex,ey,ep,ed)
 % [es,QX,edi]=bar2gs(ex,ey,ep,ed,n)
 % [es,QX,edi,eci]=bar2gs(ex,ey,ep,ed,n)
 %-------------------------------------------------------------------------
 %    PURPOSE
-%      Calculate section forces in a two dimensional bar element (bar2e).
+%      Calculate section forces in a two dimensional bar element (bar2ge).
 % 
 %    INPUT:  ex = [x1 x2]           element node coordinates 
 %            ey = [y1 y2]           

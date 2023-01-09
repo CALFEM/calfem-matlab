@@ -20,14 +20,15 @@
 %
 %            n:                     number of evaluation points ( default=2 )
 %          
-%    OUTPUT: es = [N1;
-%                  N2 ]             section forces, local directions
+%    OUTPUT: es = [N1 ;             section forces, local directions
+%                  N2 ;
+%                  ...]              
 %
 %            edi = [ u1 ;           element displacements, local directions,
 %                    u2 ;           in n points along the bar, dim(es)= n x 1
 %                   ...]    
 %
-%            eci = [ x1  ;      local x-coordinates of the evaluation 
+%            eci = [ x1 ;      local x-coordinates of the evaluation 
 %                    x2 ;       points, (x1=0 and xn=L)
 %                    ...]
 % -------------------------------------------------------------------------

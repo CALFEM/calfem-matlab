@@ -13,7 +13,7 @@
 %
 %              eq = [qx]              distributed load (local direction)
 %            
-%    OUTPUT:   Ke : beam stiffness matrix (2 x 2)
+%    OUTPUT:   Ke : bar stiffness matrix (2 x 2)
 %
 %              fe : element load vector (2 x 1)
 %-------------------------------------------------------------------------
