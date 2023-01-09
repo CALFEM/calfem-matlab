@@ -5,7 +5,8 @@
 % [es,edi,eci]=beam1ws(ex,ep,ed,eq,n)
 %---------------------------------------------------------------------
 %    PURPOSE
-%      Compute section forces in two dimensional beam element (beam2e). 
+%      Compute section forces in one dimensional beam element 
+%      on elastic foundation (beam1we). 
 % 
 %    INPUT:  ex = [x1 x2]     element node coordinates
 %

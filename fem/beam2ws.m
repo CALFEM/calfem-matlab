@@ -22,6 +22,8 @@
 %
 %            eq = [qX qY]           distributed loads, local directions
 %          
+%            n : number of evaluation points ( default=2 )
+%          
 %    OUTPUT: es = [ N1 V1 M1 ;  section forces, local directions, in 
 %                   N2 V2 M2 ;  n points along the beam, dim(es)= n x 3
 %                   .........]  
@@ -36,7 +38,7 @@
 %
 % -------------------------------------------------------------------------
  
-% LAST MODIFIED: O Dahlblom 2022-05-30
+% LAST MODIFIED: O Dahlblom 2022-09-30
 % Copyright (c)  Division of Structural Mechanics and
 %                Division of Solid Mechanics.
 %                Lund University
@@ -68,7 +70,7 @@
       0    0    0   nxY  nyY  0;
       0    0    0    0    0   1];
 
-  edl=G*ed'
+  edl=G*ed';
   
   a1=[edl(1); edl(4)];
   C1=[1 0;-1/L 1/L];
