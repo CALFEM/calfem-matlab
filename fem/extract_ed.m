@@ -1,28 +1,22 @@
-  function [ed]=extract_ed(edof,a)
+  function [U_elem]=extract_ed(edof, U_global)
 % ed=extract_ed(edof,a)
 %-------------------------------------------------------------
 % PURPOSE
 %  Extract element displacements from the global displacement
 %  vector according to the topology matrix edof.
 %
-% INPUT:   a:  the global displacement vector
+% INPUT:   U:  the global displacement vector
 %
 %         edof:  topology matrix
 %
-% OUTPUT: ed:  element displacement matrix
+% OUTPUT: U_elem:  element displacement matrix
 %-------------------------------------------------------------
 
-% LAST MODIFIED: M Ristinmaa 1993-08-24
-% Copyright (c)  Division of Structural Mechanics and
-%                Division of Solid Mechanics.
-%                Lund University
+% LAST MODIFIED: H Yingvar 2026-01-13
+% Change Log:
+% 1. Remove the element number index from the first column of the `edof` matrix.
+% 2. Replace loops with matrix-based batch assignment.
+
 %-------------------------------------------------------------
-    [nie,n]=size(edof);
-%
-    t=edof(:,2:n);
-%
-    for i = 1:nie
-        ed(i,1:(n-1))=a(t(i,:))';
-    end
-%
+U_elem = U_global(edof')';
 %--------------------------end--------------------------------
